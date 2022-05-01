@@ -4,17 +4,17 @@ session_start();
 
 $total=0;
 
-//Database connection, replace with your connection string.. Used PDO
+//Used PDO
 $conn = new PDO("mysql:host=localhost;dbname=test", 'root', 'rm1tagE');
 
 
-//get action string
+
 $action = isset($_GET['action'])?$_GET['action']:"";
 
 //Add to cart
 if($action=='addcart' && $_SERVER['REQUEST_METHOD']=='POST') {
 
-    //Finding the product by code
+    //Finding the product by ID
     $query = "SELECT * FROM productList WHERE id=:id";
     $stmt = $conn->prepare($query);
     $stmt->bindParam('id', $_POST['id']);
@@ -27,7 +27,7 @@ if($action=='addcart' && $_SERVER['REQUEST_METHOD']=='POST') {
     header("Location:cart.php");
 }
 
-//Empty All
+//Empty all products from cart
 if($action=='emptyall') {
     $_SESSION['products'] =array();
     header("Location:shopping-cart.php");
